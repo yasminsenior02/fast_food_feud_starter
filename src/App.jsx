@@ -3,6 +3,7 @@ import Header from "./components/Header/Header";
 import Instructions from "./components/Instructions/Instructions";
 import Chip from "./components/Chip/Chip";
 import NutritionalLabel from "./components/NutritionalLabel/NutritionalLabel";
+import { nutritionFacts } from "./constants";
 // IMPORT ANY NEEDED COMPONENTS HERE
 import { createDataSet } from "./data/dataset";
 import "./App.css";
@@ -44,6 +45,19 @@ export function App() {
     return item.food_category === categorysel && item.restaurant === restsel;
   });
 
+  let instructionwork = appInfo.instructions.start;
+  if (!categorysel && !restsel && !selecteditem) {
+    instructionwork = appInfo.instructions.start;
+  } else if (categorysel && !restsel) {
+    instructionwork = appInfo.instructions.onlyCategory;
+  } else if (!categorysel && restsel) {
+    instructionwork = appInfo.instructions.onlyRestaurant;
+  } else if (categorysel && restsel && !selecteditem) {
+    instructionwork = appInfo.instructions.noSelectedItem;
+  } else {
+    instructionwork = appInfo.instructions.allSelected;
+  }
+
   return (
     <main className="App">
       {/* CATEGORIES COLUMN */}
@@ -69,7 +83,11 @@ export function App() {
       {/* MAIN COLUMN */}
       <div className="container">
         {/* HEADER GOES HERE */}
-        <Header info={appInfo} />
+        <Header
+          title={appInfo.title}
+          tagline={appInfo.tagline}
+          description={appInfo.description}
+        />
         {/* RESTAURANTS ROW */}
         <div className="RestaurantsRow">
           <h2 className="title">Restaurants</h2>
@@ -91,7 +109,8 @@ export function App() {
         </div>
 
         {/* INSTRUCTIONS GO HERE */}
-        <Instructions info={appInfo} />
+
+        <Instructions instructions={instructionwork} />
         {/* MENU DISPLAY */}
         <div className="MenuDisplay display">
           <div className="MenuItemButtons menu-items">
@@ -116,7 +135,7 @@ export function App() {
           {/* NUTRITION FACTS */}
           <div className="NutritionFacts nutrition-facts">
             {/* YOUR CODE HERE */}
-            <NutritionalLabel item={appInfo} />
+            {selecteditem ? <NutritionalLabel item={selecteditem} /> : null}
           </div>
         </div>
 
