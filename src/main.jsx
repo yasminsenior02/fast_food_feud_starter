@@ -1,8 +1,9 @@
-import React from "react"
+import React from "react" 
 import ReactDOM from "react-dom"
 import App from "./App"
 import { InstantNoodles, updateConfig } from "instant-noodles"
 import "./globals.css"
+
 
 import { testPassingProps } from "./tests/feature-001-passing-props.test"
 import { testIteration } from "./tests/feature-002-iteration-in-jsx.test"
